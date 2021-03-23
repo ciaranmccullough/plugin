@@ -45,6 +45,16 @@ var withI18next = function withI18next(i18n, context) {
   };
 };
 
+var removePathPrefix = function removePathPrefix(pathname) {
+  var pathPrefix = (0, _gatsby.withPrefix)('/');
+
+  if (pathname.startsWith(pathPrefix)) {
+    return pathname.replace(pathPrefix, '/');
+  }
+
+  return pathname;
+};
+
 var wrapPageElement = function wrapPageElement(_ref, _ref2) {
   var _data$localeJsonNodeN;
 
@@ -89,7 +99,7 @@ var wrapPageElement = function wrapPageElement(_ref, _ref2) {
 
       if (detected !== defaultLanguage) {
         var queryParams = search || '';
-        var newUrl = (0, _gatsby.withPrefix)("/" + detected + location.pathname + queryParams + location.hash);
+        var newUrl = (0, _gatsby.withPrefix)("/" + detected + removePathPrefix(location.pathname) + queryParams + location.hash);
         window.location.replace(newUrl);
         return null;
       }
